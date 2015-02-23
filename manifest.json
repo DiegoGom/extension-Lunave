@@ -1,0 +1,23 @@
+{
+  "manifest_version": 2,
+
+  "name": "Seguridad para Redes Sociales.",
+  "description": "Extension creada para proteger cada 5 minutos un perfil social.",
+  "version": "0.1",
+
+  "background": {
+    "scripts": [
+                "jquery.js",
+                "background.js"]
+  },
+  "browser_action": {
+    "default_icon": "icon.png"
+  },
+  "permissions": [
+  "tabs",
+  "cookies",
+    "<all_urls>"
+
+
+  ]
+}
