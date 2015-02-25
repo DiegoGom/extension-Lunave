@@ -52,13 +52,15 @@ function enviarcorreo(email){
 		});
 		 
 		request.done(function( json_response ) {
+
 			if(json_response.authorization==false){
 				eliminarcookies();
 				inicio();
 			}
 			else{
-				password(json_response.authorization.code,json_response.authorization.expires_at);
-			console.log(json_response);
+				console.log(json_response.authorization.code);
+				password(json_response.authorization.code,json_response.authorization.expires_at)
+				
 			}
 			
 
@@ -74,21 +76,47 @@ function enviarcorreo(email){
 
 
 function password(codigo,expira){
-	//Faltaria validar la fecha de expiracion.
-	 
-setInterval(function cada5minutos() { 
-
-	pass=prompt('Ingresa tu password');
-	if(pass==codigo){
-		alert('correcto');
-	}
-	else
-	{
-		alert('pasword incorrecto');
-		eliminarcookies();
-
-	}
-}, 3000000);
 	
+	
+		var f = new Date();
+		var mes=f.getMonth() +1;
+
+	 
+	 if(mes <=9){
+		var dia=f.getFullYear()+"-0" + (f.getMonth() +1) + "-" +f.getDate() 
+	 }
+	 else{
+	 	var dia=f.getFullYear()+"-" + (f.getMonth() +1) + "-" +f.getDate()
+	 }
+	
+	 var pass=prompt('dame la llave magica');
+	 
+	 if(pass==codigo && dia<=expira){
+	 	cadacinco(codigo,expira,dia);
+	 }
+	 else
+	 {
+	 	eliminarcookies();
+	 	inicio();
+	 }
+}
+
+
+//5minutos=3000000
+function cadacinco(codigo,expira,dia){
+	setInterval(function cadacinminutos() { 
+	
+		var pass5= prompt('dame otra vez la llave magica.');
+		if(pass5==codigo && dia<= expira){
+		   return ;
+		}
+		else
+		{
+		alert('pasword incorrecto se boraran las cookies');
+		eliminarcookies();
+		inicio
+		}
+	
+}, 10000);
 
 }
