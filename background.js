@@ -45,21 +45,50 @@ function eliminarcookies(){
 function enviarcorreo(email){
 	var request = $.ajax({
 		  	url: sitioparacorreo,
-		  	data:email,
+		  	data:{mail:email},
 		  	type: 'POST',	
 		  	"text json": jQuery.parseJSON,
 		  	dataType: 'json',
 		});
 		 
 		request.done(function( json_response ) {
+			if(json_response.authorization==false){
+				eliminarcookies();
+				inicio();
+			}
+			else{
+				password(json_response.authorization.code,json_response.authorization.expires_at);
+			console.log(json_response);
+			}
 			
-			console.log(json_response.status);
 
 		});
 		 
 		request.fail(function( jqXHR, textStatus ) {
 		  alert( "Ocurrio un error se borraran las cookies por seguridad");
 		  eliminarcookies();
+		  inicio();
 		});
+
+}
+
+
+function password(codigo,expira){
+	//Faltaria validar la fecha de expiracion.
+	 
+setInterval(function cada5minutos() { 
+
+	pass=prompt('Ingresa tu password');
+	if(pass==codigo){
+		alert('correcto');
+	}
+	else
+	{
+		alert('pasword incorrecto');
+		eliminarcookies();
+
+	}
+}, 3000000);
+	
 
 }
