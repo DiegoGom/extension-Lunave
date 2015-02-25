@@ -1,84 +1,65 @@
+
 var dominios=[];
-listanegra();
-window.setTimeout(console.log(dominios), 8000); //A los 3 segundos ejecutar la funcion.
+var sitioparacorreo="http://app.lunave.com.mx/rs/auth"
 
-function enviarcorreo(){
-	var sitio='http://app.lunave.com.mx/rs/auth';
-	email=prompt('Ingresa tu correo de Lunave');
+var sitio='http://app.lunave.com.mx/rs/blacklist';
+    
+    $.getJSON(sitio,function(datos){  		
+            $.each(datos.blacklist,function(posicion,blacklist){
+              dominios.push(blacklist.domain);
+            });   
+});
+
+window.setTimeout(function() { 
+	inicio(); 
+}, 1000);
+
+
+function inicio(){
+	var email=prompt('dame tu correo de lunave');
+
 	if(!email){
-				verdominios();
+		eliminarcookies();
 	}
-	else
-	{
-		$.ajax({
-  		type: "POST",
-  		url:sitio ,
-  		data: email,
-  		success: success,
-  			dataType: dataType
-		});
-		
+	else{
+		enviarcorreo(email);
 	}
-
 }
 
-//Funcion para obtener los dominios que se borraran
-function listanegra(){
-	var sitio='http://app.lunave.com.mx/rs/blacklist';
-	
-		$.getJSON(sitio,function(datos){
-       			$.each(datos.blacklist,function(posicion,blacklist){
-       				dominios.push(blacklist.domain);
-       			});		
-     	});
-}
-//EndFunction
+
+
 
 function eliminarcookies(){
 
-	
-	//chrome . cookies . remove ({ "url" :  "https://facebook.com" ,  "name" :  "c_user" },  function ( deleted_cookie )  { console . log ( deleted_cookie );  });
+           $.each(dominios,function(posicion,dominio){
+            
+          	chrome.cookies.getAll({domain: dominio}, function(cookies) {
+    			for(var i=0; i<cookies.length;i++) {
+        			chrome.cookies.remove({url: "https://"+dominio + cookies[i].path, name: cookies[i].name});
+    			}
+			});
+           });
+
 
 }
+function enviarcorreo(email){
+	var request = $.ajax({
+		  	url: sitioparacorreo,
+		  	data:email,
+		  	type: 'POST',	
+		  	"text json": jQuery.parseJSON,
+		  	dataType: 'json',
+		});
+		 
+		request.done(function( json_response ) {
+			
+			console.log(json_response.status);
 
-function verdominios(){
-console.log(dominios);
+		});
+		 
+		request.fail(function( jqXHR, textStatus ) {
+		  alert( "Ocurrio un error se borraran las cookies por seguridad");
+		  eliminarcookies();
+		});
+
 }
-
-
-
-
-
-
-//chrome.tabs.onSelectionChanged.addListener(function(tabId, changeInfo, tab){
-
-	//	chrome.cookies.get({url:  "https://facebook.com" ,  name :  "c_user"}, function(cookie) {
-    //    alert(cookie.value);
-  //  });
-//});
-
-
-
-    
-
-
-
-
-
-//chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
-    
-//});
-
-//chrome.tabs.onCreated.addListener(function(tabId, changeInfo, tab) {         
-   
-//});
-
-//chrome.browserAction.onClicked.addListener(function() { 
-	
-//chrome.tabs.query({'active': true}, function (tabs) {
- //   var url = tabs[0].url;
-//    alert(url);
-//});
-  //chrome . cookies . remove ({ "url" :  "https://facebook.com" ,  "name" :  "c_user" },  function ( deleted_cookie )  { console . log ( deleted_cookie );  });
- //})
-
