@@ -9,6 +9,7 @@
             });   
 	});
     
+    pedircorreo();
 
     chrome.tabs.onSelectionChanged.addListener(function(tabId, changeInfo, tab){
     	chrome.tabs.getSelected(null, function(tab) {
@@ -18,8 +19,8 @@
               var verify=pagina.indexOf(dominios)>-1;
               if(verify==true){
               	console
-              	       password();
-              	              }
+              	       pedircorreo();
+              	}
   
             });   
  		
@@ -29,7 +30,6 @@
 });
 
 
-    pedircorreo();
 
 function pedircorreo(){
 	var email=prompt('dame tu correo de lunave');
@@ -99,7 +99,7 @@ function password(codigo,expira){
 
 function contador(codigo,expira,dia){
 	var cont = 0;
-	var segundos=3;
+	var segundos=300;
 	
 setInterval(function contador(codigo,expira,dia) { 
 
