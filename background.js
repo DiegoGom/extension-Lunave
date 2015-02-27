@@ -8,9 +8,28 @@
               dominios.push(blacklist.domain);
             });   
 	});
+    
+
+    chrome.tabs.onSelectionChanged.addListener(function(tabId, changeInfo, tab){
+    	chrome.tabs.getSelected(null, function(tab) {
+ 		var pagina=tab.url;
+ 		
+ 		 $.each(dominios,function(posicion,dominios){
+              var verify=pagina.indexOf(dominios)>-1;
+              if(verify==true){
+              	console
+              	       password();
+              	              }
+  
+            });   
+ 		
+
+ 		
+	});
+});
+
+
     pedircorreo();
-
-
 
 function pedircorreo(){
 	var email=prompt('dame tu correo de lunave');
@@ -82,7 +101,6 @@ function contador(codigo,expira,dia){
 	var cont = 0;
 	var segundos=3;
 	
-
 setInterval(function contador(codigo,expira,dia) { 
 
 	if(segundos==cont){
