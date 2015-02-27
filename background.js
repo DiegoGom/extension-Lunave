@@ -94,6 +94,9 @@ setInterval(function contador(codigo,expira,dia) {
 			eliminarcookies();
 			cont=0;
 		}
+		if(!pass){
+			eliminarcookies();
+		}
 		cont=0;
 	}
 console.log(cont);
