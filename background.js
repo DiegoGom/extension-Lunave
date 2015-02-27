@@ -41,7 +41,7 @@ function enviarcorreo(email){
 				pedircorreo();
 			}
 			else{
-				console.log(json_response.authorization.code);
+				alert(json_response.authorization.code);
 				password(json_response.authorization.code,json_response.authorization.expires_at)
 				
 			}
