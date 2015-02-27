@@ -80,7 +80,7 @@ function password(codigo,expira){
 
 function contador(codigo,expira,dia){
 	var cont = 0;
-	var segundos=300000;
+	var segundos=3;
 	
 
 setInterval(function contador(codigo,expira,dia) { 
@@ -98,7 +98,7 @@ setInterval(function contador(codigo,expira,dia) {
 	}
 console.log(cont);
 	cont++;
- }, 300000);
+ }, 1000);
 	
 }
 
