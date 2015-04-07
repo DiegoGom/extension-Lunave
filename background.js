@@ -78,7 +78,7 @@ cadacinco();
 
 function cadacinco(){
 	var cont = 0;
-	var segundos=280;
+	var segundos=600;
 	
 	setInterval(function contador() { 
 
